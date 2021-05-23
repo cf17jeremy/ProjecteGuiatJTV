@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 348093905eabbc44f8c030f2da102a8b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - tickSource: {instanceID: 0}
+  - dmgsound: {fileID: 8300000, guid: ea004f48dba33e94e89e020885e22fe7, type: 3}
+  - deathsound: {fileID: 8300000, guid: e66969c0a23aedb4da2a3b741c947858, type: 3}
+  - txtstate: {instanceID: 0}
+  - bgstate: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
