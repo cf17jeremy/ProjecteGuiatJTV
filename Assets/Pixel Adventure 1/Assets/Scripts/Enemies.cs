@@ -9,6 +9,7 @@ public class Enemies : MonoBehaviour{
     public AudioClip dmgsound;
     public AudioClip deathsound;
     public bool isanimated;
+    public static bool isinvencible = false;
     public Text txtstate;
     public GameObject bgstate;
     Animator anim;
@@ -20,28 +21,33 @@ public class Enemies : MonoBehaviour{
     }
 
     private void OnCollisionEnter2D(Collision2D collision){
-        if (collision.gameObject.tag == "Player"){
-            if(isanimated){
-                    anim.enabled = false;
+        if (!isinvencible){
+            gameObject.GetComponent<BoxCollider2D>().enabled = true;
+            if (collision.gameObject.tag == "Player"){
+                if(isanimated){
+                        anim.enabled = false;
+                }
+                if(PlayerMove.vidas <= 1){
+                    bgstate.gameObject.SetActive (true);
+                    txtstate.text = "GAME OVER";
+                    PlayerMove.IsInputEnabled = false;
+                    PlayerMove.timesdeath ++;
+                    tickSource.clip = deathsound;
+                    tickSource.Play();
+                    StartCoroutine("TimerDIE");
+                }
+                else{
+                    PlayerMove.IsInputEnabled = false;
+                    PlayerMove.vidas --;
+                    tickSource.clip = dmgsound;
+                    tickSource.Play();
+                    StartCoroutine("TimerDMG");
+                }
+                
+                Destroy(collision.gameObject, tickSource.clip.length);
             }
-            if(PlayerMove.vidas <= 1){
-                bgstate.gameObject.SetActive (true);
-                txtstate.text = "GAME OVER";
-                PlayerMove.IsInputEnabled = false;
-                PlayerMove.timesdeath ++;
-                tickSource.clip = deathsound;
-                tickSource.Play();
-                StartCoroutine("TimerDIE");
-            }
-            else{
-                PlayerMove.IsInputEnabled = false;
-                PlayerMove.vidas --;
-                tickSource.clip = dmgsound;
-                tickSource.Play();
-                StartCoroutine("TimerDMG");
-            }
-            
-            Destroy(collision.gameObject, tickSource.clip.length);
+        }else{
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
         }
     }
 
